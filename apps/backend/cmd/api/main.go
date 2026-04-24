@@ -257,8 +257,17 @@ func main() {
 			r.Post("/upload", upload.HandleUpload)
 
 			// Common Staff Write Ops (faqs, agendas)
-			r.Mount("/faqs", faqHandler.Routes())
-			r.Mount("/agendas", agendaHandler.Routes())
+			r.Route("/faqs", func(r chi.Router) {
+				r.Post("/", faqHandler.Create)
+				r.Put("/{id}", faqHandler.Update)
+				r.Delete("/{id}", faqHandler.Delete)
+				r.Put("/{id}/order", faqHandler.UpdateOrder)
+			})
+			r.Route("/agendas", func(r chi.Router) {
+				r.Post("/", agendaHandler.Create)
+				r.Put("/{id}", agendaHandler.Update)
+				r.Delete("/{id}", agendaHandler.Delete)
+			})
 
 			// Superadmin Only
 			r.Group(func(r chi.Router) {

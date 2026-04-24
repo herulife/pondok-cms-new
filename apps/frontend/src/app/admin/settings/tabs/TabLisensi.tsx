@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { getLicenseStatus, updateSetting, LicenseStatus } from '@/lib/api';
+import { getLicenseStatus, getSettingsMap, updateSetting, LicenseStatus } from '@/lib/api';
 import { useToast } from '@/components/Toast';
 import { Save, RefreshCw, Key, ShieldCheck } from 'lucide-react';
 
@@ -17,8 +17,12 @@ export default function TabLisensi() {
 
   const fetchLicense = async () => {
     setIsLoading(true);
-    const lData = await getLicenseStatus();
+    const [lData, settingsMap] = await Promise.all([
+      getLicenseStatus(),
+      getSettingsMap()
+    ]);
     setLicense(lData);
+    setLicenseKeyInput(settingsMap['app_license_key'] || '');
     setIsLoading(false);
   };
 
@@ -27,10 +31,10 @@ export default function TabLisensi() {
     if (!licenseKeyInput) return;
     
     setIsSavingLicense(true);
-    const res = await updateSetting('system_license_key', licenseKeyInput);
+    const res = await updateSetting('app_license_key', licenseKeyInput.trim());
     if (res.success) {
       showToast('success', 'Kode Lisensi diperbarui. Memverifikasi...');
-      setTimeout(() => window.location.reload(), 1500);
+      await fetchLicense();
     } else {
       showToast('error', 'Gagal memperbarui lisensi.');
     }
@@ -57,8 +61,16 @@ export default function TabLisensi() {
                  <div className="w-full bg-emerald-900/50 px-8 py-5 rounded-xl border border-emerald-800">
                     <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Status Lisensi</p>
                     <p className={`font-black text-2xl tracking-widest ${license?.is_valid ? 'text-amber-400' : 'text-rose-500 underline'}`}>
-                      {license?.is_valid ? 'AKTIF' : 'EXPIRED'}
+                      {license?.is_valid ? 'AKTIF' : 'TIDAK AKTIF'}
                     </p>
+                    <p className="mt-2 text-xs font-medium text-emerald-200/80 break-all">
+                      {license?.message || 'Belum ada lisensi tersimpan'}
+                    </p>
+                    {license?.is_valid ? (
+                      <p className="mt-1 text-[11px] font-semibold text-emerald-300">
+                        Sisa masa aktif: {license.days_left} hari
+                      </p>
+                    ) : null}
                  </div>
               </div>
            </section>
@@ -83,7 +95,7 @@ export default function TabLisensi() {
                       value={licenseKeyInput}
                       onChange={(e) => setLicenseKeyInput(e.target.value)}
                       className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-rose-500/10 focus:border-rose-500 transition-all font-mono text-xs leading-relaxed"
-                      placeholder="Paste your license key here..."
+                      placeholder="Paste license key JWT RSA di sini..."
                     />
                  </div>
 

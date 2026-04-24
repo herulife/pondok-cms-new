@@ -155,6 +155,7 @@ func main() {
 		r.With(registerLimiter.Middleware).Post("/register", authHandler.Register)
 		r.With(googleLoginLimiter.Middleware).Post("/auth/google", authHandler.GoogleLogin)
 		r.Post("/logout", authHandler.Logout)
+		r.Get("/premium-check", authHandler.GetLicenseStatus)
 		r.Post("/telegram/webhook", notificationHandler.TelegramWebhook)
 
 		// Public Contact Message

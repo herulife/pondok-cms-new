@@ -160,12 +160,27 @@ func main() {
 		// Public Contact Message
 		r.With(contactLimiter.Middleware).Post("/contact", messageHandler.Create)
 
-		// ── Public Access (Read Only) ──────────────────
+		// ── Public Access + Protected Writes ──────────────────
 		r.Route("/faqs", func(r chi.Router) {
 			r.Get("/", faqHandler.List)
+			r.Group(func(r chi.Router) {
+				r.Use(auth.AuthMiddleware)
+				r.Use(auth.RequireLicense(database.DB))
+				r.Post("/", faqHandler.Create)
+				r.Put("/{id}", faqHandler.Update)
+				r.Delete("/{id}", faqHandler.Delete)
+				r.Put("/{id}/order", faqHandler.UpdateOrder)
+			})
 		})
 		r.Route("/agendas", func(r chi.Router) {
 			r.Get("/", agendaHandler.List)
+			r.Group(func(r chi.Router) {
+				r.Use(auth.AuthMiddleware)
+				r.Use(auth.RequireLicense(database.DB))
+				r.Post("/", agendaHandler.Create)
+				r.Put("/{id}", agendaHandler.Update)
+				r.Delete("/{id}", agendaHandler.Delete)
+			})
 		})
 
 		// ── Gallery Management ──────────────────
@@ -331,26 +346,6 @@ func main() {
 			})
 		})
 
-		r.Route("/faqs", func(r chi.Router) {
-			r.Group(func(r chi.Router) {
-				r.Use(auth.AuthMiddleware)
-				r.Use(auth.RequireLicense(database.DB))
-				r.Post("/", faqHandler.Create)
-				r.Put("/{id}", faqHandler.Update)
-				r.Delete("/{id}", faqHandler.Delete)
-				r.Put("/{id}/order", faqHandler.UpdateOrder)
-			})
-		})
-
-		r.Route("/agendas", func(r chi.Router) {
-			r.Group(func(r chi.Router) {
-				r.Use(auth.AuthMiddleware)
-				r.Use(auth.RequireLicense(database.DB))
-				r.Post("/", agendaHandler.Create)
-				r.Put("/{id}", agendaHandler.Update)
-				r.Delete("/{id}", agendaHandler.Delete)
-			})
-		})
 	})
 
 	// Serve Static Files -> public/uploads

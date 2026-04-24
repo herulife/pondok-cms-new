@@ -34,8 +34,9 @@ function LoginPageContent() {
       } else {
         showToast('error', 'Email atau password salah!');
       }
-    } catch {
-      showToast('error', 'Gagal terhubung ke server.');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Gagal terhubung ke server.';
+      showToast('error', message);
     } finally {
       setIsLoading(false);
     }
@@ -55,8 +56,9 @@ function LoginPageContent() {
       } else {
         showToast('error', 'Gagal sinkronisasi akun Google');
       }
-    } catch {
-      showToast('error', 'Terjadi kesalahan sistem');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Terjadi kesalahan sistem';
+      showToast('error', message);
     }
   };
 

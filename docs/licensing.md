@@ -24,6 +24,7 @@ Backend akan memverifikasi token lisensi menggunakan:
 Generator tersedia di:
 
 - `apps/backend/cmd/licensectl`
+- `apps/backend/cmd/adminctl`
 
 ### Generate key pair
 
@@ -55,8 +56,19 @@ cd apps/backend
 go run ./cmd/licensectl inspect --token "<JWT_LICENSE>"
 ```
 
+### Reset password admin darurat
+
+```bash
+cd apps/backend
+go run ./cmd/adminctl reset-password \
+  --db ./darussunnah.db \
+  --email admin@darussunnah.com \
+  --password "NewStrongPassword!"
+```
+
 ## Catatan Penting
 
 - Jangan commit private key ke GitHub.
 - Jika Anda generate key pair baru, backend harus memakai `public.key` yang baru sebelum token lisensi baru akan dianggap valid.
 - Validator saat ini minimal membutuhkan claim `exp`. Tool `licensectl` juga menambahkan `iss`, `iat`, `nbf`, `plan`, `customer`, dan `domain` untuk audit yang lebih rapi.
+- Gunakan `adminctl` hanya untuk recovery darurat dan segera ganti password sementara lewat panel admin atau prosedur operasional Anda.

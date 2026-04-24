@@ -38,7 +38,7 @@ services:
       LOG_LEVEL: info
       TZ: Asia/Bangkok
     volumes:
-      - ./data/darussunnah.db:/data/darussunnah.db
+      - ./data:/data
       - ./data/uploads:/app/apps/backend/public/uploads
     expose:
       - "8080"

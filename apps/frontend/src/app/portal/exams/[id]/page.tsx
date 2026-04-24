@@ -18,7 +18,8 @@ import {
   CheckCircle2,
   RefreshCw,
   LayoutGrid,
-  GraduationCap
+  GraduationCap,
+  ShieldCheck
 } from 'lucide-react';
 
 export default function ExamInterfacePage() {

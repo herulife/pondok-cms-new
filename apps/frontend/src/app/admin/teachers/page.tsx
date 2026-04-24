@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getTeachers, deleteTeacher, updateTeacher, addTeacher, uploadImage, Teacher, normalizeApiAssetUrl, resolveDisplayImageUrl } from '@/lib/api';
 import ConfirmDialog from '@/components/ConfirmDialog';
@@ -9,7 +9,7 @@ import GallerySelectionModal from '@/components/GallerySelectionModal';
 import { useToast } from '@/components/Toast';
 import { UserPlus, Mail, Phone, Trash2, Pencil, Users, Search, X, Save, Upload, BookOpen, Quote, Image as ImageIcon } from 'lucide-react';
 
-export default function TeachersAdminPage() {
+function TeachersAdminPageContent() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -508,5 +508,13 @@ export default function TeachersAdminPage() {
         onSelect={handleGallerySelect}
       />
     </>
+  );
+}
+
+export default function TeachersAdminPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <TeachersAdminPageContent />
+    </Suspense>
   );
 }

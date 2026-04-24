@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { registerUser, googleLogin } from '@/lib/api';
 import { useAuth } from '@/components/AuthProvider';
 import { useToast } from '@/components/Toast';
@@ -14,7 +14,7 @@ import { useSearchParams } from 'next/navigation';
 // Placeholder client ID (User will need to change this in production)
 const GOOGLE_CLIENT_ID = "mock_client_id";
 
-export default function RegisterPage() {
+function RegisterPageContent() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -221,5 +221,13 @@ export default function RegisterPage() {
         </motion.div>
       </div>
     </GoogleOAuthProvider>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <RegisterPageContent />
+    </Suspense>
   );
 }

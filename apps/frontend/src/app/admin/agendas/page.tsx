@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getAgendas, deleteAgenda, updateAgenda, addAgenda, Agenda } from '@/lib/api';
 import ConfirmDialog from '@/components/ConfirmDialog';
@@ -9,7 +9,7 @@ import { Plus, Trash2, Calendar, MapPin, Clock, Search, X, Save, Pencil, Filter,
 
 const CATEGORIES = ['Akademik', 'PSB', 'Libur', 'Event', 'Umum'];
 
-export default function AgendasAdminPage() {
+function AgendasAdminPageContent() {
   const [agendas, setAgendas] = useState<Agenda[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -428,5 +428,13 @@ export default function AgendasAdminPage() {
         confirmText="Batalkan Agenda"
       />
     </>
+  );
+}
+
+export default function AgendasAdminPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <AgendasAdminPageContent />
+    </Suspense>
   );
 }

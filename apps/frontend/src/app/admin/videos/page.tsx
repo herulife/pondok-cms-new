@@ -1,14 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { Suspense, useState, useEffect, useCallback, useMemo } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getVideos, deleteVideo, updateVideo, addVideo, Video, formatGalleryAlbumTitle, getGallerySortTimestamp, getYouTubeThumbnailUrl, slugifyContentKey } from '@/lib/api';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import { useToast } from '@/components/Toast';
 import { Video as VideoIcon, Plus, Play, Trash2, ExternalLink, Search, X, Save, Pencil, FolderOpen, CalendarDays, Star } from 'lucide-react';
 
-export default function VideosAdminPage() {
+function VideosAdminPageContent() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [pagination, setPagination] = useState({ total: 0, limit: 9, offset: 0 });
   const [isLoading, setIsLoading] = useState(true);
@@ -433,5 +433,13 @@ export default function VideosAdminPage() {
         confirmText="Hapus Video"
       />
     </>
+  );
+}
+
+export default function VideosAdminPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <VideosAdminPageContent />
+    </Suspense>
   );
 }

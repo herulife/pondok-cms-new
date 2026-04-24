@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getFacilities, deleteFacility, updateFacility, addFacility, uploadImage, Facility, normalizeApiAssetUrl, resolveDisplayImageUrl } from '@/lib/api';
 import ConfirmDialog from '@/components/ConfirmDialog';
@@ -11,7 +11,7 @@ import { Plus, Trash2, Building, Star, Image as ImageIcon, Search, X, Save, Penc
 
 const CATEGORIES = ['Umum', 'Asrama', 'Kelas', 'Ibadah', 'Olahraga', 'Kesehatan'];
 
-export default function FacilitiesAdminPage() {
+function FacilitiesAdminPageContent() {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -477,5 +477,13 @@ export default function FacilitiesAdminPage() {
         onSelect={handleGallerySelect}
       />
     </>
+  );
+}
+
+export default function FacilitiesAdminPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <FacilitiesAdminPageContent />
+    </Suspense>
   );
 }

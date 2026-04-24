@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getFaqs, deleteFaq, updateFaqOrder, updateFaq, addFaq, Faq } from '@/lib/api';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import { useToast } from '@/components/Toast';
 import { Plus, Trash2, ArrowUp, ArrowDown, HelpCircle, Search, X, Save, Pencil, Eye, EyeOff } from 'lucide-react';
 
-export default function FaqsAdminPage() {
+function FaqsAdminPageContent() {
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -336,5 +336,13 @@ export default function FaqsAdminPage() {
         confirmText="Hapus Permanen"
       />
     </>
+  );
+}
+
+export default function FaqsAdminPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <FaqsAdminPageContent />
+    </Suspense>
   );
 }

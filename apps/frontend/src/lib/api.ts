@@ -1,4 +1,12 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+function getApiBaseUrl() {
+	const configured = process.env.NEXT_PUBLIC_API_URL?.trim();
+	if (typeof window !== 'undefined') {
+		return '/api';
+	}
+	return configured || 'http://localhost:8080/api';
+}
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Helper to get auth headers
 function getAuthHeaders() {

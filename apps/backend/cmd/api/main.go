@@ -161,8 +161,12 @@ func main() {
 		r.With(contactLimiter.Middleware).Post("/contact", messageHandler.Create)
 
 		// ── Public Access (Read Only) ──────────────────
-		r.Get("/faqs", faqHandler.List)
-		r.Get("/agendas", agendaHandler.List)
+		r.Route("/faqs", func(r chi.Router) {
+			r.Get("/", faqHandler.List)
+		})
+		r.Route("/agendas", func(r chi.Router) {
+			r.Get("/", agendaHandler.List)
+		})
 
 		// ── Gallery Management ──────────────────
 		r.Route("/gallery", func(r chi.Router) {
@@ -256,19 +260,6 @@ func main() {
 			r.Get("/me", authHandler.GetMe)
 			r.Post("/upload", upload.HandleUpload)
 
-			// Common Staff Write Ops (faqs, agendas)
-			r.Route("/faqs", func(r chi.Router) {
-				r.Post("/", faqHandler.Create)
-				r.Put("/{id}", faqHandler.Update)
-				r.Delete("/{id}", faqHandler.Delete)
-				r.Put("/{id}/order", faqHandler.UpdateOrder)
-			})
-			r.Route("/agendas", func(r chi.Router) {
-				r.Post("/", agendaHandler.Create)
-				r.Put("/{id}", agendaHandler.Update)
-				r.Delete("/{id}", agendaHandler.Delete)
-			})
-
 			// Superadmin Only
 			r.Group(func(r chi.Router) {
 				r.Use(auth.RequireRole("superadmin"))
@@ -337,6 +328,27 @@ func main() {
 				r.Mount("/academics", academicHandler.Routes())
 				r.Mount("/notifications", notificationHandler.Routes())
 				r.Post("/attendance/scan", attendanceHandler.Scan)
+			})
+		})
+
+		r.Route("/faqs", func(r chi.Router) {
+			r.Group(func(r chi.Router) {
+				r.Use(auth.AuthMiddleware)
+				r.Use(auth.RequireLicense(database.DB))
+				r.Post("/", faqHandler.Create)
+				r.Put("/{id}", faqHandler.Update)
+				r.Delete("/{id}", faqHandler.Delete)
+				r.Put("/{id}/order", faqHandler.UpdateOrder)
+			})
+		})
+
+		r.Route("/agendas", func(r chi.Router) {
+			r.Group(func(r chi.Router) {
+				r.Use(auth.AuthMiddleware)
+				r.Use(auth.RequireLicense(database.DB))
+				r.Post("/", agendaHandler.Create)
+				r.Put("/{id}", agendaHandler.Update)
+				r.Delete("/{id}", agendaHandler.Delete)
 			})
 		})
 	})

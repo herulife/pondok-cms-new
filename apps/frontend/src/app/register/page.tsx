@@ -13,6 +13,7 @@ import { useSearchParams } from 'next/navigation';
 
 // Placeholder client ID (User will need to change this in production)
 const GOOGLE_CLIENT_ID = "mock_client_id";
+const GOOGLE_LOGIN_ENABLED = GOOGLE_CLIENT_ID.trim() !== '' && GOOGLE_CLIENT_ID !== 'mock_client_id';
 
 function RegisterPageContent() {
   const [name, setName] = useState('');
@@ -64,8 +65,7 @@ function RegisterPageContent() {
     }
   };
 
-  return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+  const content = (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center font-outfit relative overflow-hidden py-10 px-4">
         {/* Decorative Orbs matching HOMEPAGE */}
         <motion.div 
@@ -149,24 +149,30 @@ function RegisterPageContent() {
               </button>
             </form>
             
-            <div className="mt-8 flex flex-col items-center">
-              <div className="flex items-center w-full mb-6">
-                <div className="flex-1 h-px bg-slate-200"></div>
-                <div className="px-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Atau daftar dengan</div>
-                <div className="flex-1 h-px bg-slate-200"></div>
+            {GOOGLE_LOGIN_ENABLED ? (
+              <div className="mt-8 flex flex-col items-center">
+                <div className="flex items-center w-full mb-6">
+                  <div className="flex-1 h-px bg-slate-200"></div>
+                  <div className="px-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Atau daftar dengan</div>
+                  <div className="flex-1 h-px bg-slate-200"></div>
+                </div>
+                
+                <div className="w-full flex justify-center scale-105">
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => showToast('error', 'Daftar lewat Google dibatalkan')}
+                    theme="outline"
+                    size="large"
+                    text="signup_with"
+                    shape="pill"
+                  />
+                </div>
               </div>
-              
-              <div className="w-full flex justify-center scale-105">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={() => showToast('error', 'Daftar lewat Google dibatalkan')}
-                  theme="outline"
-                  size="large"
-                  text="signup_with"
-                  shape="pill"
-                />
+            ) : (
+              <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                Pendaftaran Google belum dikonfigurasi di server.
               </div>
-            </div>
+            )}
 
             <div className="mt-8 text-center text-slate-500 font-medium">
                Sudah punya akun? <Link href={fromPSB ? "/login?from=psb" : "/login"} className="text-emerald-600 font-bold hover:underline">Masuk di sini</Link>
@@ -220,6 +226,15 @@ function RegisterPageContent() {
 
         </motion.div>
       </div>
+  );
+
+  if (!GOOGLE_LOGIN_ENABLED) {
+    return content;
+  }
+
+  return (
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      {content}
     </GoogleOAuthProvider>
   );
 }

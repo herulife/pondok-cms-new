@@ -1,12 +1,29 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
+import { Calendar, Newspaper, Search } from 'lucide-react';
 import { getNews, News } from '@/lib/api';
 import PublicLayout from '@/components/PublicLayout';
-import NewsCard from '@/components/NewsCard';
-import { PublicEmptyState, PublicGridSkeleton } from '@/components/PublicState';
+import { PublicEmptyState } from '@/components/PublicState';
 import PublicSectionIntro from '@/components/PublicSectionIntro';
-import { Newspaper, Search } from 'lucide-react';
+
+function formatPublishedDate(value: string) {
+  if (!value) {
+    return 'Baru saja';
+  }
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return 'Baru saja';
+  }
+
+  return parsed.toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
 
 export default function NewsPortal() {
   const [news, setNews] = useState<News[]>([]);
@@ -17,63 +34,95 @@ export default function NewsPortal() {
     async function fetchNews() {
       try {
         const data = await getNews();
-        setNews(data);
-      } catch (e) {
-        console.error('Error fetching news:', e);
+        setNews(Array.isArray(data) ? data.slice(0, 12) : []);
+      } catch (error) {
+        console.error('Error fetching news:', error);
+        setNews([]);
       } finally {
         setIsLoading(false);
       }
     }
-    fetchNews();
+
+    void fetchNews();
   }, []);
 
-  const filteredNews = news.filter(item => 
-    item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    item.excerpt?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredNews = useMemo(() => {
+    const keyword = searchTerm.trim().toLowerCase();
+    if (!keyword) {
+      return news;
+    }
+
+    return news.filter((item) => {
+      const title = item.title?.toLowerCase?.() || '';
+      const excerpt = item.excerpt?.toLowerCase?.() || '';
+      return title.includes(keyword) || excerpt.includes(keyword);
+    });
+  }, [news, searchTerm]);
 
   return (
     <PublicLayout>
-      {/* Header */}
-      <section className="border-b border-slate-200 bg-slate-50 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 sm:gap-8">
+      <section className="border-b border-slate-200 bg-white px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8">
           <PublicSectionIntro
             eyebrow="Berita"
-            title="Berita"
-            description="Ikuti berita terbaru dan informasi resmi dari Pondok Pesantren Darussunnah."
+            title="Kabar Darussunnah"
+            description="Halaman berita kami sederhanakan sementara agar akses tetap ringan dan stabil."
           />
-          
-          <div className="flex w-full flex-col gap-4 sm:flex-row md:w-auto">
-            <div className="relative group w-full md:w-80">
-              <input 
-                type="text" 
-                placeholder="Cari berita atau judul..." 
-                className="w-full px-12 py-4 bg-white border border-slate-200 rounded-2xl font-medium focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all outline-none"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500" size={20} />
-            </div>
+
+          <div className="relative w-full max-w-md">
+            <input
+              type="text"
+              placeholder="Cari judul atau ringkasan berita..."
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-12 py-4 text-sm font-medium text-slate-700 outline-none transition focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           </div>
         </div>
       </section>
 
-      {/* News Grid */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         {isLoading ? (
-          <PublicGridSkeleton count={6} className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3" itemClassName="h-[450px] rounded-[2.5rem]" />
+          <div className="space-y-4">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="h-28 animate-pulse rounded-3xl bg-slate-100" />
+            ))}
+          </div>
         ) : filteredNews.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+          <div className="space-y-4">
             {filteredNews.map((item) => (
-              <NewsCard key={item.id} news={item} />
+              <Link
+                key={item.id}
+                href={`/news/${item.slug}`}
+                className="block rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md"
+              >
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-700">
+                      <Calendar size={14} />
+                      <span>{formatPublishedDate(item.created_at)}</span>
+                    </div>
+                    <h2 className="mt-3 text-2xl font-black tracking-tight text-slate-900">
+                      {item.title}
+                    </h2>
+                    <p className="mt-3 line-clamp-3 max-w-3xl text-sm leading-7 text-slate-600">
+                      {item.excerpt || 'Klik untuk membaca berita selengkapnya.'}
+                    </p>
+                  </div>
+                  <div className="shrink-0 text-sm font-bold text-emerald-700">
+                    Baca detail
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         ) : (
           <PublicEmptyState
             icon={Newspaper}
             title="Berita belum ditemukan"
-            description="Coba gunakan kata kunci lain atau buka kembali halaman ini nanti."
-            className="rounded-[3rem] py-24"
+            description="Coba gunakan kata kunci lain atau buka halaman ini lagi beberapa saat lagi."
+            className="rounded-[2.5rem] py-20"
           />
         )}
       </section>

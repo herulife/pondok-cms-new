@@ -93,6 +93,7 @@ func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 		sendJSONResponse(w, http.StatusInternalServerError, false, "Gagal memproses permintaan (Internal Server Error)", nil)
 		return
 	}
+	sanitizeNewsList(newsList)
 
 	sendJSONResponse(w, http.StatusOK, true, "Daftar berita berhasil dimuat", map[string]interface{}{
 		"items": newsList,
@@ -111,6 +112,7 @@ func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 		sendJSONResponse(w, http.StatusNotFound, false, "Berita tidak ditemukan", nil)
 		return
 	}
+	sanitizeNewsModel(n)
 	sendJSONResponse(w, http.StatusOK, true, "Detail berita berhasil dimuat", n)
 }
 
@@ -121,6 +123,7 @@ func (h *Handler) GetBySlug(w http.ResponseWriter, r *http.Request) {
 		sendJSONResponse(w, http.StatusNotFound, false, "Berita tidak ditemukan", nil)
 		return
 	}
+	sanitizeNewsModel(n)
 	sendJSONResponse(w, http.StatusOK, true, "Detail berita berhasil dimuat", n)
 }
 
@@ -141,8 +144,8 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	request := validators.NewsRequest{
 		Title:    payload.Title,
 		Slug:     payload.Slug,
-		Content:  payload.Content,
-		Excerpt:  payload.Excerpt,
+		Content:  sanitizeNewsHTML(payload.Content),
+		Excerpt:  sanitizeNewsHTML(payload.Excerpt),
 		Status:   payload.Status,
 		ImageURL: payload.ImageURL,
 	}
@@ -208,8 +211,8 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	request := validators.NewsRequest{
 		Title:    payload.Title,
 		Slug:     payload.Slug,
-		Content:  payload.Content,
-		Excerpt:  payload.Excerpt,
+		Content:  sanitizeNewsHTML(payload.Content),
+		Excerpt:  sanitizeNewsHTML(payload.Excerpt),
 		Status:   payload.Status,
 		ImageURL: payload.ImageURL,
 	}

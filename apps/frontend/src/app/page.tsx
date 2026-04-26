@@ -107,6 +107,24 @@ const nextSteps = [
   },
 ];
 
+const supportHighlights = [
+  {
+    title: 'Pendampingan Ustadz',
+    description:
+      'Santri dibina dengan arahan yang konsisten agar perkembangan hafalan, adab, dan kebiasaan baik tetap terjaga.',
+  },
+  {
+    title: 'Komunikasi Wali',
+    description:
+      'Informasi penting mengenai kegiatan dan perkembangan santri disiapkan agar wali lebih mudah mengikuti proses pembinaan.',
+  },
+  {
+    title: 'Lingkungan Bertumbuh',
+    description:
+      'Suasana pondok dibangun untuk menumbuhkan rasa tanggung jawab, kebersamaan, dan semangat memperbaiki diri.',
+  },
+];
+
 export default function LandingPage() {
   return (
     <PublicLayout>
@@ -308,6 +326,35 @@ export default function LandingPage() {
                   {item.label}
                 </span>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-slate-50 py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
+              Pendampingan
+            </p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900">
+              Pembinaan tidak berhenti pada ruang kelas, tetapi hadir dalam keseharian santri.
+            </h2>
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              Kami ingin menghadirkan pengalaman belajar yang tertata, hangat, dan bertahap agar
+              perkembangan ilmu serta karakter berjalan beriringan.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {supportHighlights.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
+              </div>
             ))}
           </div>
         </div>

@@ -143,6 +143,19 @@ const reasonsToChoose = [
   },
 ];
 
+const closingNotes = [
+  {
+    title: 'Bagi Calon Wali Santri',
+    description:
+      'Informasi dasar tentang profil pondok, program, dan pendaftaran kami susun agar mudah ditelusuri dari halaman publik.',
+  },
+  {
+    title: 'Bagi Alumni dan Masyarakat',
+    description:
+      'Berita, agenda, serta perkembangan kegiatan pondok disajikan agar hubungan dengan Darussunnah tetap terjaga.',
+  },
+];
+
 export default function LandingPage() {
   return (
     <PublicLayout>
@@ -403,6 +416,37 @@ export default function LandingPage() {
                 <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-emerald-900 py-16 text-white">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-200">
+                Tetap Terhubung
+              </p>
+              <h2 className="mt-3 text-3xl font-black tracking-tight">
+                Darussunnah Parung membuka ruang informasi yang lebih rapi untuk wali, santri, dan masyarakat.
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-emerald-50/85">
+                Kami terus merapikan tampilan publik agar profil pondok, jalur pendaftaran, dan
+                kabar kegiatan dapat diakses lebih nyaman tanpa mengurangi kestabilan website.
+              </p>
+            </div>
+
+            <div className="grid gap-4">
+              {closingNotes.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-sm"
+                >
+                  <h3 className="text-lg font-bold text-white">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-emerald-50/80">{item.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

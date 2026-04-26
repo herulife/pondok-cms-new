@@ -83,6 +83,30 @@ const dailyRhythms = [
   },
 ];
 
+const nextSteps = [
+  {
+    title: 'Pelajari Profil Pondok',
+    description:
+      'Kenali visi, lingkungan belajar, dan gambaran umum pembinaan di Darussunnah Parung.',
+    href: '/profil',
+    label: 'Buka profil',
+  },
+  {
+    title: 'Simak Informasi PSB',
+    description:
+      'Lihat persyaratan, alur pendaftaran, dan informasi penting bagi calon wali santri.',
+    href: '/psb',
+    label: 'Lihat PSB',
+  },
+  {
+    title: 'Ikuti Kabar Terbaru',
+    description:
+      'Pantau berita kegiatan, agenda, dan informasi terbaru pondok secara berkala.',
+    href: '/news',
+    label: 'Baca berita',
+  },
+];
+
 export default function LandingPage() {
   return (
     <PublicLayout>
@@ -251,6 +275,39 @@ export default function LandingPage() {
                 <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-emerald-950 py-16 text-white">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="max-w-3xl">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-200">
+              Langkah Berikutnya
+            </p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight">
+              Akses informasi penting dengan jalur yang sederhana dan jelas.
+            </h2>
+            <p className="mt-4 text-base leading-8 text-emerald-50/85">
+              Bagi calon wali santri, alumni, maupun masyarakat umum, halaman-halaman utama kami
+              siapkan agar informasi inti bisa ditemukan lebih cepat tanpa membingungkan.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {nextSteps.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white/15"
+              >
+                <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-emerald-50/80">{item.description}</p>
+                <span className="mt-5 inline-flex text-sm font-bold text-emerald-200">
+                  {item.label}
+                </span>
+              </Link>
             ))}
           </div>
         </div>

@@ -37,18 +37,41 @@ export default function ProgramPage() {
 
   return (
     <PublicLayout>
-      {/* Hero Header */}
-      <section className="relative py-20 bg-emerald-900 border-b border-emerald-800 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/assets/img/khalaqoh.jpg')] bg-cover bg-center opacity-20" />
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 font-outfit uppercase tracking-tight">Program Pendidikan</h1>
-          <p className="text-emerald-100 text-lg max-w-2xl mx-auto">Kurikulum terpadu untuk mencetak generasi hafizh yang kompeten.</p>
+      <section className="relative overflow-hidden border-b border-emerald-800 bg-slate-950 py-24 text-white">
+        <div className="absolute inset-0 bg-[url('/assets/img/khalaqoh.jpg')] bg-cover bg-center opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-emerald-950/70" />
+        <div className="absolute inset-0 opacity-25">
+          <div className="absolute -left-10 top-12 h-40 w-40 rounded-full bg-emerald-300 blur-3xl" />
+          <div className="absolute right-0 top-0 h-56 w-56 rounded-full bg-cyan-300 blur-3xl" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 text-center">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.28em] text-emerald-100">
+            <span className="h-2 w-2 rounded-full bg-emerald-300" />
+            Program Pendidikan
+          </p>
+          <h1 className="mt-6 text-4xl font-black uppercase tracking-tight text-white md:text-5xl lg:text-6xl">
+            Program Pendidikan
+          </h1>
+          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-emerald-50/90">
+            Kurikulum terpadu yang dirancang untuk menumbuhkan hafalan, adab, pemahaman ilmu, dan
+            kesiapan santri menjalani amanah kehidupan.
+          </p>
         </div>
       </section>
 
-      {/* Program Details */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 max-w-6xl">
+      <section className="bg-[linear-gradient(to_bottom,_#ffffff,_#f8fafc)] py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
+              Fokus Pembelajaran
+            </p>
+            <h2 className="mt-3 text-3xl font-extrabold text-slate-900">Struktur Program Pondok</h2>
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              Setiap program disusun untuk membantu santri bertumbuh secara seimbang dalam hafalan,
+              adab, pembiasaan ibadah, dan kesiapan berdakwah.
+            </p>
+          </div>
+
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {[...Array(4)].map((_, i) => (
@@ -61,7 +84,7 @@ export default function ProgramPage() {
                 const imageUrl = resolveDisplayImageUrl(program.image_url);
                 const description = program.excerpt || program.content || 'Program unggulan untuk membentuk karakter dan kompetensi santri.';
                 return (
-                  <div key={program.id} className="group relative bg-white rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                  <div key={program.id} className="group relative overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
                     <div className="relative h-56 bg-slate-50 overflow-hidden">
                       {imageUrl ? (
                         <img src={imageUrl} alt={program.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -85,11 +108,14 @@ export default function ProgramPage() {
                       </div>
                     </div>
                     <div className="p-10">
-                      <h2 className="text-2xl font-black text-slate-900 font-outfit uppercase tracking-tight mb-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-600">
+                        Program Pondok
+                      </p>
+                      <h2 className="mb-4 mt-3 text-2xl font-black uppercase tracking-tight text-slate-900">
                         {program.title}
                       </h2>
-                      <p className="text-slate-600 leading-relaxed text-lg mb-8 line-clamp-3">{description}</p>
-                      <Link href="/psb" className="inline-flex items-center gap-2 text-emerald-600 font-bold hover:gap-4 transition-all">
+                      <p className="mb-8 text-lg leading-relaxed text-slate-600 line-clamp-3">{description}</p>
+                      <Link href="/psb" className="inline-flex items-center gap-2 font-bold text-emerald-600 transition-all hover:gap-4">
                         Pelajari Lebih Lanjut <ArrowRight size={18} />
                       </Link>
                     </div>
@@ -109,17 +135,21 @@ export default function ProgramPage() {
         </div>
       </section>
 
-      {/* Target Output */}
-      <section className="py-20 bg-slate-50 border-t border-slate-100">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <h2 className="text-3xl font-extrabold text-slate-900 mb-6 font-outfit">Target Lulusan (Output)</h2>
+      <section className="border-t border-slate-200 bg-slate-50 py-20">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">Target Output</p>
+          <h2 className="mt-3 mb-6 text-3xl font-extrabold text-slate-900">Target Lulusan</h2>
+          <p className="mx-auto mb-10 max-w-2xl text-base leading-8 text-slate-600">
+            Program pendidikan diarahkan agar santri memiliki keluaran yang jelas, baik dalam
+            hafalan, karakter, maupun kesiapan berkontribusi di tengah masyarakat.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               "Hafizh 30 Juz Mutqin",
               "Mampu Berdakwah",
               "Berakhlak Karimah"
             ].map((target, i) => (
-              <div key={i} className="p-6 bg-white rounded-3xl border border-emerald-100 shadow-sm font-bold text-lg text-emerald-800">
+              <div key={i} className="rounded-3xl border border-emerald-100 bg-white p-6 text-lg font-bold text-emerald-800 shadow-sm">
                 {target}
               </div>
             ))}

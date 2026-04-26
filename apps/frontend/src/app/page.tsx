@@ -249,7 +249,9 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-emerald-50 to-white" />
+        <div className="relative mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-3xl">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
             Tentang Darussunnah
@@ -268,8 +270,9 @@ export default function LandingPage() {
           {valueCards.map((item) => (
             <div
               key={item.title}
-              className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+              className="rounded-3xl border border-emerald-100 bg-gradient-to-b from-white to-emerald-50 p-6 shadow-sm"
             >
+              <div className="mb-4 h-1 w-14 rounded-full bg-emerald-500" />
               <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
             </div>
@@ -281,19 +284,23 @@ export default function LandingPage() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md"
+              className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md"
             >
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-600">
+                Akses Cepat
+              </p>
               <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
-              <span className="mt-5 inline-flex text-sm font-bold text-emerald-700">
+              <span className="mt-5 inline-flex text-sm font-bold text-emerald-700 transition group-hover:translate-x-1">
                 Buka halaman
               </span>
             </Link>
           ))}
         </div>
+        </div>
       </section>
 
-      <section className="border-t border-slate-200 bg-slate-50 py-16">
+      <section className="border-t border-slate-200 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_40%),linear-gradient(to_bottom,_#f8fafc,_#f1f5f9)] py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
@@ -332,7 +339,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 bg-white py-16">
+      <section className="border-t border-slate-200 bg-[linear-gradient(to_bottom,_#ffffff,_#f8fafc)] py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="max-w-3xl">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
@@ -351,8 +358,11 @@ export default function LandingPage() {
             {dailyRhythms.map((item) => (
               <div
                 key={item.title}
-                className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
               >
+                <div className="mb-4 inline-flex rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
+                  Ritme Harian
+                </div>
                 <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
               </div>
@@ -415,6 +425,7 @@ export default function LandingPage() {
                 key={item.title}
                 className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
               >
+                <div className="mb-4 h-1 w-12 rounded-full bg-emerald-500" />
                 <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
               </div>
@@ -423,7 +434,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 bg-white py-16">
+      <section className="border-t border-slate-200 bg-[linear-gradient(to_bottom,_#ffffff,_#f8fafc)] py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="max-w-3xl">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
@@ -442,8 +453,11 @@ export default function LandingPage() {
             {reasonsToChoose.map((item) => (
               <div
                 key={item.title}
-                className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+                className="rounded-3xl border border-emerald-100 bg-gradient-to-b from-white to-emerald-50 p-6 shadow-sm"
               >
+                <div className="mb-4 inline-flex rounded-full bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700 shadow-sm">
+                  Nilai
+                </div>
                 <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
               </div>
@@ -483,7 +497,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 bg-white py-16">
+      <section className="border-t border-slate-200 bg-[linear-gradient(to_bottom,_#ffffff,_#f8fafc)] py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
@@ -503,11 +517,14 @@ export default function LandingPage() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md"
+                className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-md"
               >
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-600">
+                  Informasi
+                </p>
                 <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
-                <span className="mt-5 inline-flex text-sm font-bold text-emerald-700">
+                <span className="mt-5 inline-flex text-sm font-bold text-emerald-700 transition group-hover:translate-x-1">
                   {item.label}
                 </span>
               </Link>
@@ -535,7 +552,7 @@ export default function LandingPage() {
             {closingStats.map((item) => (
               <div
                 key={item.value}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm"
+                className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 text-center backdrop-blur-sm"
               >
                 <p className="text-2xl font-black tracking-tight text-white">{item.value}</p>
                 <p className="mt-3 text-sm leading-7 text-slate-300">{item.label}</p>

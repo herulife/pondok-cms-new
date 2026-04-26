@@ -65,6 +65,24 @@ const valueCards = [
   },
 ];
 
+const dailyRhythms = [
+  {
+    title: 'Pagi yang Tertib',
+    description:
+      'Hari dimulai dengan ibadah, murajaah, dan persiapan belajar agar santri terbiasa disiplin sejak awal waktu.',
+  },
+  {
+    title: 'Belajar yang Fokus',
+    description:
+      'Sesi tahfidz, kajian, dan pembelajaran pendukung berjalan terarah dengan pendampingan ustadz secara berkala.',
+  },
+  {
+    title: 'Malam yang Menenangkan',
+    description:
+      'Penutup hari diisi evaluasi, penguatan hafalan, dan pembiasaan hidup sederhana dalam suasana asrama.',
+  },
+];
+
 export default function LandingPage() {
   return (
     <PublicLayout>
@@ -205,6 +223,35 @@ export default function LandingPage() {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-white py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="max-w-3xl">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-600">
+              Kehidupan Santri
+            </p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900">
+              Ritme pembinaan yang dibangun dengan tertib dan berkesinambungan.
+            </h2>
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              Pola kegiatan harian dirancang agar santri bertumbuh dalam kedisiplinan, kebiasaan
+              ibadah, dan tanggung jawab terhadap amanah belajar yang dijalani.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {dailyRhythms.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+              >
+                <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

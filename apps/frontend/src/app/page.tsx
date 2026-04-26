@@ -191,13 +191,18 @@ const closingStats = [
 export default function LandingPage() {
   return (
     <PublicLayout>
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-teal-800 text-white">
-        <div className="absolute inset-0 opacity-20">
+      <section className="relative overflow-hidden bg-slate-950 text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-40"
+          style={{ backgroundImage: "url('/assets/img/gedung.webp')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-emerald-950/70" />
+        <div className="absolute inset-0 opacity-25">
           <div className="absolute -left-10 top-12 h-40 w-40 rounded-full bg-emerald-300 blur-3xl" />
           <div className="absolute right-0 top-0 h-56 w-56 rounded-full bg-cyan-300 blur-3xl" />
           <div className="absolute bottom-0 left-1/3 h-48 w-48 rounded-full bg-yellow-200 blur-3xl" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-24 lg:py-28">
+        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-24 lg:min-h-[680px] lg:py-28">
           <div className="max-w-4xl">
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.28em] text-emerald-100">
               <span className="h-2 w-2 rounded-full bg-emerald-300" />
@@ -226,7 +231,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
             <div className="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur-sm">
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-200">
                 Fokus Utama
@@ -249,7 +254,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden">
+      <section className="relative -mt-8 overflow-hidden sm:-mt-10">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-emerald-50 to-white" />
         <div className="relative mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-3xl">

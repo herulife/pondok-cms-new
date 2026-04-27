@@ -109,27 +109,65 @@ export default function HomeHeroSlider() {
                 {activeSlide.cta}
               </Link>
             </div>
+            <div className="mt-6 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-white/15">
+              <div
+                className="h-full rounded-full bg-emerald-400 transition-all duration-500"
+                style={{ width: `${((activeIndex + 1) / slides.length) * 100}%` }}
+              />
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 border-t border-white/10 bg-slate-950/90 px-4 py-4">
-          <span className="mr-1 text-[10px] font-black uppercase tracking-[0.22em] text-white/50">
-            Slide {activeIndex + 1}/{slides.length}
-          </span>
-          {slides.map((slide, index) => (
-            <button
-              key={slide.title}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={`rounded-full px-4 py-2 text-left text-[11px] font-black uppercase tracking-[0.18em] transition ${
-                index === activeIndex
-                  ? 'bg-emerald-500 text-white'
-                  : 'bg-white/5 text-white/65 hover:bg-white/10 hover:text-white'
-              }`}
-            >
-              {slide.eyebrow}
-            </button>
-          ))}
+        <div className="border-t border-white/10 bg-slate-950/90 px-4 py-4">
+          <div className="mb-3 flex flex-wrap items-center gap-3">
+            <span className="mr-1 text-[10px] font-black uppercase tracking-[0.22em] text-white/50">
+              Slide {activeIndex + 1}/{slides.length}
+            </span>
+            {slides.map((slide, index) => (
+              <button
+                key={slide.title}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={`rounded-full px-4 py-2 text-left text-[11px] font-black uppercase tracking-[0.18em] transition ${
+                  index === activeIndex
+                    ? 'bg-emerald-500 text-white'
+                    : 'bg-white/5 text-white/65 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {slide.eyebrow}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-3">
+            {slides.map((slide, index) => (
+              <button
+                key={`${slide.title}-preview`}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={`group overflow-hidden rounded-[1.25rem] border text-left transition ${
+                  index === activeIndex
+                    ? 'border-emerald-400 bg-white/10 shadow-[0_20px_40px_-25px_rgba(16,185,129,0.8)]'
+                    : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
+                }`}
+              >
+                <div
+                  className="h-20 w-full bg-cover bg-center"
+                  style={{ backgroundImage: `url('${slide.image}')` }}
+                >
+                  <div className="h-full w-full bg-gradient-to-t from-slate-950/80 to-slate-900/10" />
+                </div>
+                <div className="p-4">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-200">
+                    {slide.eyebrow}
+                  </p>
+                  <p className="mt-2 text-sm font-bold leading-6 text-white transition group-hover:text-emerald-100">
+                    {slide.title}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

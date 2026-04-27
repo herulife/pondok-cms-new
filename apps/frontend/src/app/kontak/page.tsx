@@ -66,19 +66,38 @@ export default function ContactPage() {
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
       {/* Header Section */}
-      <div className="bg-emerald-950 text-white py-24 relative overflow-hidden">
-        {/* Decorative elements */}
+      <div className="bg-slate-950 text-white py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-emerald-950/70"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-800/30 rounded-full blur-[100px] transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-800/20 rounded-full blur-[100px] transform -translate-x-1/2 translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-sky-900/20 rounded-full blur-[100px] transform -translate-x-1/2 translate-y-1/2"></div>
         
         <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
-          <div className="inline-block px-4 py-1.5 bg-emerald-900/60 border border-emerald-700/50 rounded-full text-emerald-300 text-sm font-bold tracking-widest mb-6">
+          <div className="inline-block px-4 py-1.5 bg-white/10 border border-white/15 rounded-full text-emerald-200 text-sm font-bold tracking-widest mb-6">
             HUBUNGI KAMI
           </div>
           <h1 className="text-4xl md:text-5xl font-black mb-6 tracking-tight font-outfit">Hubungi Pondok Darussunnah</h1>
           <p className="text-emerald-100/80 max-w-2xl mx-auto text-lg leading-relaxed">
             Jika ingin bertanya tentang program pondok, pendaftaran, atau kebutuhan informasi lainnya, silakan kirim pesan kepada kami.
           </p>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3 text-left">
+            <div className="rounded-[1.75rem] border border-white/10 bg-white/10 px-5 py-5 backdrop-blur">
+              <p className="text-[11px] font-black uppercase tracking-[0.25em] text-emerald-200">Alamat</p>
+              <p className="mt-3 text-sm font-medium leading-relaxed text-white/80">{schoolAddress}</p>
+            </div>
+            <div className="rounded-[1.75rem] border border-white/10 bg-white/10 px-5 py-5 backdrop-blur">
+              <p className="text-[11px] font-black uppercase tracking-[0.25em] text-emerald-200">Kontak Utama</p>
+              <p className="mt-3 text-sm font-semibold text-white">{schoolPhone}</p>
+              <p className="mt-1 text-xs text-white/70">{schoolEmail}</p>
+            </div>
+            <div className="rounded-[1.75rem] border border-white/10 bg-white/10 px-5 py-5 backdrop-blur">
+              <p className="text-[11px] font-black uppercase tracking-[0.25em] text-emerald-200">Layanan</p>
+              <p className="mt-3 text-sm font-medium text-white/80">Senin - Sabtu, 08:00 - 16:00 WIB</p>
+              <p className="mt-1 text-xs text-white/70">
+                {adminWhatsAppNumbers.length > 1 ? `${adminWhatsAppNumbers.length} admin siap membantu` : 'Admin siap membantu'}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -235,7 +254,23 @@ export default function ContactPage() {
 
         {/* Large Map Section */}
         <div className="mt-12 bg-white p-4 md:p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100">
-           <h2 className="text-xl font-black text-slate-800 mb-6 font-outfit px-4">Peta Lokasi</h2>
+           <div className="flex flex-col gap-4 px-4 pb-4 md:flex-row md:items-end md:justify-between">
+             <div>
+               <p className="text-[11px] font-black uppercase tracking-[0.25em] text-emerald-600">Lokasi Pondok</p>
+               <h2 className="mt-2 text-xl font-black text-slate-800 font-outfit">Peta Lokasi</h2>
+               <p className="mt-2 max-w-2xl text-sm text-slate-500">
+                 Gunakan peta ini untuk menemukan jalur menuju Pondok Pesantren Tahfidz Al-Qur&apos;an Darussunnah di Parung, Bogor.
+               </p>
+             </div>
+             <a
+               href="https://maps.google.com/?q=Pondok%20Pesantren%20Darussunnah%20Parung"
+               target="_blank"
+               rel="noreferrer"
+               className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 text-xs font-black uppercase tracking-[0.2em] text-white transition hover:bg-slate-800"
+             >
+               Buka di Google Maps
+             </a>
+           </div>
            <div className="w-full h-[400px] rounded-3xl overflow-hidden bg-slate-100">
              <iframe 
                 src="https://maps.google.com/maps?q=Pondok%20Pesantren%20Darussunnah%20Parung&t=&z=15&ie=UTF8&iwloc=&output=embed" 

@@ -56,8 +56,9 @@ export default function SambutanPage() {
   return (
     <PublicLayout>
       {/* 🏛️ HEADER SECTION */}
-      <section className="relative overflow-hidden bg-slate-900 pt-24 pb-48 lg:pt-32 lg:pb-64">
+      <section className="relative overflow-hidden bg-slate-950 pt-24 pb-48 lg:pt-32 lg:pb-64">
         <div className="absolute inset-0 bg-[url('/assets/img/pattern.svg')] opacity-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-emerald-950/70" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
         
         <div className="container mx-auto px-4 relative z-10 text-center">
@@ -66,7 +67,7 @@ export default function SambutanPage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center"
           >
-            <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.3em] mb-6">
+            <span className="mb-6 rounded-full border border-white/15 bg-white/10 px-6 py-2 text-xs font-black uppercase tracking-[0.3em] text-emerald-200">
               Pesan dari Pimpinan
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-4">
@@ -101,6 +102,7 @@ export default function SambutanPage() {
                 </div>
 
                 <div className="text-center space-y-2">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-600">Pimpinan Pondok</p>
                   <h2 className="text-2xl font-black text-slate-900 tracking-tight">{name}</h2>
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold uppercase tracking-wider">
                     <GraduationCap size={14} />
@@ -131,7 +133,7 @@ export default function SambutanPage() {
                   </div>
 
                   <div className="prose prose-slate prose-lg max-w-none">
-                    <div className="space-y-6 text-slate-700 leading-relaxed font-outfit font-medium text-lg lg:text-xl italic">
+                    <div className="space-y-6 text-slate-700 leading-relaxed font-medium text-lg lg:text-xl italic">
                       {paragraphs.length > 0 ? (
                         paragraphs.map((p, i) => (
                           <p key={i}>{p}</p>
@@ -158,7 +160,7 @@ export default function SambutanPage() {
       {/* 🚀 CTA SECTION */}
       <section className="pb-24 pt-12">
         <div className="container mx-auto px-4 max-w-5xl text-center">
-           <div className="bg-emerald-600 rounded-[2.5rem] p-12 lg:p-16 relative overflow-hidden shadow-2xl shadow-emerald-900/20">
+           <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-emerald-600 to-teal-600 p-12 shadow-2xl shadow-emerald-900/20 lg:p-16">
               <div className="absolute inset-0 bg-[url('/assets/img/pattern.svg')] opacity-10" />
               <div className="relative z-10">
                  <h2 className="text-3xl md:text-4xl font-black text-white mb-6">Mulai Perjalanan Spiritual Santri</h2>

@@ -683,6 +683,39 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 py-24 lg:py-28">
+        <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-emerald-400/30 blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-teal-300/20 blur-3xl" />
+        <div className="relative mx-auto max-w-5xl px-4 text-center text-white">
+          <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-100/80">
+            Langkah Akhir
+          </p>
+          <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
+            Siap Bergabung Bersama Darussunnah?
+          </h2>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-emerald-50/90">
+            Kenali lebih dekat sistem pendidikan Darussunnah dan lanjutkan ke proses pendaftaran
+            santri baru melalui halaman PSB atau komunikasi langsung dengan tim pondok.
+          </p>
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="/psb"
+              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-extrabold text-emerald-900 transition hover:bg-emerald-50"
+            >
+              Lihat Info PSB
+            </Link>
+            <a
+              href="https://wa.me/6281413241748"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/10 px-8 py-4 text-base font-bold text-white transition hover:bg-white/20"
+            >
+              Hubungi via WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
     </PublicLayout>
   );
 }

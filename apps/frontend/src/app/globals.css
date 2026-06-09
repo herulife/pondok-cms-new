@@ -60,7 +60,7 @@ html, body {
 }
 
 .hero-swiper .swiper-pagination {
-  bottom: 100px !important;
+  bottom: 30px !important;
   z-index: 30;
 }
 

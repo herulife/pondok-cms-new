@@ -5,6 +5,7 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -95,8 +96,43 @@ func (rl *RateLimiter) filterRecentRequests(requests []time.Time, now time.Time)
 
 func clientIP(r *http.Request) string {
 	host, _, err := net.SplitHostPort(r.RemoteAddr)
-	if err == nil && host != "" {
-		return host
+	if err != nil || host == "" {
+		host = r.RemoteAddr
 	}
-	return r.RemoteAddr
+
+	remoteIP := net.ParseIP(host)
+	if isTrustedProxyIP(remoteIP) {
+		if ip := firstValidHeaderIP(r.Header.Get("CF-Connecting-IP")); ip != "" {
+			return ip
+		}
+		if ip := firstValidHeaderIP(r.Header.Get("X-Forwarded-For")); ip != "" {
+			return ip
+		}
+		if ip := firstValidHeaderIP(r.Header.Get("X-Real-IP")); ip != "" {
+			return ip
+		}
+	}
+
+	return host
+}
+
+func isTrustedProxyIP(ip net.IP) bool {
+	if ip == nil {
+		return false
+	}
+
+	return ip.IsLoopback() || ip.IsPrivate() || ip.IsLinkLocalUnicast()
+}
+
+func firstValidHeaderIP(value string) string {
+	for _, part := range strings.Split(value, ",") {
+		candidate := strings.TrimSpace(part)
+		if candidate == "" {
+			continue
+		}
+		if ip := net.ParseIP(candidate); ip != nil {
+			return ip.String()
+		}
+	}
+	return ""
 }
